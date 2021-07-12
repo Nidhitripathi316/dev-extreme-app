@@ -1,0 +1,82 @@
+<dx-data-grid
+    [dataSource]="customers"
+    [columns]="['Picture', 'Title', 'FirstName', 'LastName', 'Position','BirthDate','HireDate']"
+    [showBorders]="true"
+    [rowAlternationEnabled]="true"
+    [allowColumnResizing]="true"
+    (onExporting)="onExporting($event)">
+    <dxo-filter-row 
+    [visible]="showFilterRow" 
+    [applyFilter]="currentFilter"></dxo-filter-row>
+<dxo-header-filter 
+    [visible]="showHeaderFilter"></dxo-header-filter>
+    <dxo-search-panel 
+    [visible]="true" 
+    [(text)]="searchText">
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    </dxo-search-panel>
+    <dxo-state-storing [enabled]="true" type="sessionStorage" storageKey="storage"></dxo-state-storing>
+
+     <dxi-column dataField="Picture" [width]="100" [allowFiltering]="false"
+        [allowSorting]="false" cellTemplate="cellTemplate2">
+        <dxi-validation-rule type="required"></dxi-validation-rule></dxi-column> 
+    <dxi-column dataField="Prefix" [width]="70" caption="Title" >
+         <dxi-validation-rule type="required"></dxi-validation-rule></dxi-column>
+       
+    <dxi-column dataField="FirstName " cellTemplate="cellTemplate">
+            
+     </dxi-column>
+     <dxi-column dataField="LastName">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+     </dxi-column>
+    <dxi-column dataField="Position">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="BirthDate" dataType="date">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="HireDate" dataType="date">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+
+     <div *dxTemplate="let d of 'cellTemplate'">
+        <div class="red">{{d.data.FirstName}}</div>
+    </div> 
+    <div *dxTemplate="let d of 'cellTemplate2'">
+        <img [src]="d.data.Picture"/>
+    </div> 
+    <dxo-editing
+    mode="popup"
+    [allowUpdating]="true"
+    [allowDeleting]="true"
+    [allowAdding]="true">
+    </dxo-editing>
+    <dxo-export [enabled]="true"  [allowExportSelectedData]="true" ></dxo-export>
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+        [showPageSizeSelector]="true"
+        [allowedPageSizes]="[10, 25, 50]"
+    ></dxo-pager>
+    <dxo-column-chooser #columnChooser
+        [enabled]="true"
+        [allowSearch]="allowSearch"
+        [mode]="columnChooserModes[0].key">
+    </dxo-column-chooser>
+</dx-data-grid>
+<div class="options">
+    <div class="caption">Options</div>
+    <div class="option">
+        <span>Column chooser mode</span>
+        <dx-select-box 
+            id="columnChooserMode" 
+            [items]="columnChooserModes" 
+            [(value)]="columnChooser.mode" 
+            valueExpr="key"
+            displayExpr="name"></dx-select-box>
+    </div>
+    <div class="option">
+    <dx-check-box 
+        text="Allow search" 
+        [(value)]="allowSearch"></dx-check-box>
+    </div>
+</div>

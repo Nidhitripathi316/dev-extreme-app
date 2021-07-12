@@ -1,0 +1,125 @@
+<div class="long-title">
+    <h3>Employee Details</h3>
+</div>
+<form action="your-action" (submit)="onFormSubmit($event)">
+<div id="form-container">
+    <dx-form id="form"
+        [colCount]="2"
+        [formData]="employee">
+        <dxi-item itemType="group" caption="Credentials">
+        <dxi-item dataField="FirstName" [editorOptions]="{ disabled: false }"></dxi-item>
+        <dxi-item dataField="Position" editorType="dxSelectBox" [editorOptions]="{ items: positions, searchEnabled: true, value: '' }">
+            <dxi-validation-rule type="required" message="Position is required"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="LastName" [editorOptions]="{ disabled: false }"></dxi-item>
+        <dxi-item>
+            <div class="dx-field">
+                <div class="dx-field-label">Gender</div>
+                <div class="dx-field-value">
+                    <dx-radio-group
+                        [items]="priorities"
+                        [value]="priorities[0]"
+                        layout="horizontal">
+                    </dx-radio-group>
+                </div>
+            </div>
+        </dxi-item>
+        <dxi-item dataField="HireDate" editorType="dxDateBox" [editorOptions]="{ value: null, width: '100%' }">
+            <dxi-validation-rule type="required" message="Hire date is required"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item>
+            <div class="dx-field">
+                <div class="dx-field-label">Set Birthday</div>
+                <div class="dx-field-value">
+                    <dx-date-box
+                        applyValueMode="useButtons"
+                        [(value)]="value"
+                        [min]="min"
+                        [max]="now">
+                    </dx-date-box>
+                </div>
+            </div>
+            <div class="dx-field">
+                <div class="dx-field-value">
+                    Your age is <div id="age">{{diffInDay}}</div>
+                </div>
+            </div>
+        </dxi-item>
+        <dxi-item>
+            <div id="fileuploader-container">
+                <dx-file-uploader
+                    selectButtonText="Select picture"
+                    labelText=""
+                    accept="image/*"
+                    uploadMode="useForm">
+                </dx-file-uploader>
+            </div>
+        </dxi-item>
+    </dxi-item> 
+        <dxi-item itemType="group" caption="Personal Data">
+        <dxi-item dataField="BirthDate" editorType="dxDateBox" [editorOptions]="{ invalidDateMessage: 'The birthdate must have the following format: MM/dd/yyyy', disabled: false, width: '100%' }"></dxi-item>
+        <dxi-item dataField="Address"></dxi-item>
+        <dxi-item dataField="Notes" editorType="dxTextArea" [editorOptions]="{ height: 90 }" [colSpan]="2"></dxi-item>        
+        <dxi-item>
+        <div class="dx-field">
+            <div class="dx-field-label">Hobbies</div>
+            <div class="dx-field-value">
+                <dx-check-box
+                    [value]="true"
+                    [width]="80"
+                    text="Studying"
+                ></dx-check-box>
+                <dx-check-box
+                    [value]="true"
+                    [width]="80"
+                    text="Singing"
+                ></dx-check-box>
+                <dx-check-box
+                    [value]="true"
+                    [width]="80"
+                    text="Dance"
+                ></dx-check-box>
+            </div>
+        </div>
+    </dxi-item>
+    </dxi-item>
+    <dxi-item>
+        <dx-html-editor height="125px">
+            <h4><b>Describe YourSelf</b></h4>
+        </dx-html-editor>
+    </dxi-item>
+    
+    <dxi-item itemType="group" caption="Contact Information">
+        
+        <dxi-item itemType="tabbed">
+            <dxo-tab-panel-options [deferRendering]="false">
+            </dxo-tab-panel-options>
+            <dxi-tab title="Phone">
+                <dxi-item dataField="Phone" [editorOptions]="{ mask: '+1 (X00) 000-0000', maskRules: rules }"></dxi-item>
+            </dxi-tab>
+            <dxi-tab title="Skype">
+                <dxi-item dataField="Skype"></dxi-item>
+            </dxi-tab>
+            <dxi-tab title="Email">
+                <dxi-item dataField="Email">
+                    <dx-validator>
+                        <dxi-validation-rule type="required" message="Email is required"></dxi-validation-rule>
+                        <dxi-validation-rule type="email" message="Email is invalid"></dxi-validation-rule>
+                        <dxi-validation-rule type="async" message="Email is already registered" [validationCallback]="asyncValidation"></dxi-validation-rule>
+                    </dx-validator>
+                </dxi-item> 
+            </dxi-tab>
+        </dxi-item>     
+    </dxi-item>
+    <dxi-item>
+        <dx-button 
+            id="button"
+            text="Submit"
+            type="success"  
+            [useSubmitBehavior]="true">
+        </dx-button>
+    </dxi-item>
+    
+    </dx-form>
+</div>
+</form>
